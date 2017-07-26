@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.bbs.dao.PostDao">
+
+	<resultMap type="PostPo" id="_postPo">
+		<id column="post_id" property="postId" jdbcType="INTEGER" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="post_time" property="postTime" jdbcType="TIMESTAMP" />
+		<result column="hot" property="hot" jdbcType="INTEGER" />
+		<result column="src" property="src" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<insert id="insert" parameterType="PostPo">
+
+		insert into tb_post(user_id,src,type,title) values
+		(
+		#{userId,jdbcType=INTEGER},
+		#{src,jdbcType=VARCHAR},
+		#{type,jdbcType=VARCHAR},
+		#{title,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<select id="getPost" parameterType="int" resultMap="_postPo">
+		select * from tb_post
+		where
+		post_id=#{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="getMaxCountByType" resultType="int" parameterType="String">
+		select count(type) from tb_post where type=#{type,jdbcType=VARCHAR}
+	</select>
+
+	<select id="getPostsByTtileWithKeyWord" resultMap="_postPo"
+		parameterType="String">
+		select * from tb_post where title like
+		concat('%',#{title,jdbcType=VARCHAR},'%')
+	</select>
+	
+	<sql id="postFlied">
+		`post_id`,`user_id`,`post_time`,`hot`,`src`,`type`,`title`
+	</sql>
+
+	<select id="getPostsByUserId" resultMap="_postPo" parameterType="int">
+		select
+		<include refid="postFlied" />
+		from tb_post inner join
+		tb_user on tb_post.user_id=tb_user.user_id
+		where tb_post.user_id=#{userId};
+	</select>
+	
+	
+	<!-- /** /** *根据发布时间和热度获取帖子 *select * from post where post_time like ? order 
+		by hot desc limit 0,12 * @param time * @return */ public List<PostPo> getPostsByTimeAndHot(String 
+		time); /** * * 根据类别进行分页查询 * @param type 帖子类型 * @param start 开始记录 * @param 
+		end 结束记录 * @return */ public List<PostPo> getRangeOfPostByTypeDesc(@Param("type")String 
+		type, @Param("start")int start, @Param("end")int end); /** * 根据帖子的id删除帖子 
+		* @param post_id */ public void delPost(int post_id); /** * 根据帖子的id返回用户id 
+		* @param post_id * @return 用户id */ public int getUserIdByPostId(int post_id); 
+		/** * 根据范围返回帖子 * @param start * @param end * @return */ public List<PostPo> 
+		getRangeOfPostByDesc(@Param("start")int start,@Param("end") int end); -->
+</mapper>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.bbs.dao.UserDao">
+    
+     <resultMap type="UserPo" id="_userPo">
+       <id column="user_id" jdbcType="INTEGER" property="userId"/>
+       <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+       <result column="password" jdbcType="VARCHAR" property="password"></result>
+       <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+       <result column="sex" jdbcType="CHAR" property="sex"/>
+       <result column="birthday" jdbcType="DATE" property="birthday"/>
+       <result column="user_icon" jdbcType="VARCHAR" property="userIcon"/>
+       <result column="email" jdbcType="VARCHAR" property="email"/>
+       <result column="reg_time" jdbcType="TIMESTAMP" property="regTime"/>
+      </resultMap>
+     <update id="update" parameterType="UserPo">
+      update tb_user set 
+        user_name=#{userName,jdbcType=VARCHAR},
+        password=#{password,jdbcType=VARCHAR},
+        nickname=#{nickname,jdbcType=VARCHAR},
+        sex=#{sex,jdbcType=CHAR},
+        birthday=#{birthday,jdbcType=DATE},
+        user_icon=#{userIcon,jdbcType=VARCHAR},
+        email=#{email,jdbcType=VARCHAR},
+        where user_id=#{userId,jdbcType=INTEGER} 
+     </update>
+     <insert id="insertUser" parameterType="UserPo">
+        insert into tb_user(user_name,password,nickname)
+        values
+        (
+        #{userName,jdbcType=VARCHAR},
+        password=#{password,jdbcType=VARCHAR},
+        nickname=#{nickname,jdbcType=VARCHAR},
+        email=#{email,jdbcType=VARCHAR}
+        )
+     </insert>
+     
+     <select id="getUserById" parameterType="int" resultType="UserPo">
+        select * from tb_user where user_id =#{userId,jdbcType=INTEGER}
+     </select>
+     
+     <select id="getUserByUserName" parameterType="String" resultType="UserPo">
+        select * from tb_user where user_name =#{userName,jdbcType=VARCHAR}
+     </select>
+     
+     <select id="getUserByNickNameWithKeyWord" resultMap="_userPo" parameterType="String">
+        select * from tb_user where user_name like concat("%",#{userName,jdbcType=VARCHAR},"%")
+     </select>
+	
+</mapper>

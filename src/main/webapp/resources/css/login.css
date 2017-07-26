@@ -1,0 +1,31 @@
+body{
+	background-color:#e2e2e2;
+}
+#content {
+	width: 400px;
+	height: 250px;
+	margin:150px auto 240px auto;
+}
+.btn {
+	width:198px;
+	height:33px;
+}
+#footer {
+	width:400px;
+	margin:0 auto;
+}
+#footer ul li {
+	width:65px;
+	float:left;
+	list-style: none;
+	overflow: hidden;
+}
+#footer ul {
+  overflow: hidden;	
+}
+#footer p {
+	text-align: center;
+}
+	
+	
+}

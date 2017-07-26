@@ -1,0 +1,11 @@
+org\bbs\web\UserController.class
+org\bbs\entity\PostPo.class
+org\bbs\entity\UserPo.class
+org\bbs\dao\UserDao.class
+org\bbs\dao\Collection.class
+org\bbs\service\UserService.class
+org\bbs\entity\CollectionPo.class
+org\bbs\util\VercodeUtils.class
+org\bbs\dao\CommentDao.class
+org\bbs\dao\PostDao.class
+org\bbs\entity\CommentPo.class
